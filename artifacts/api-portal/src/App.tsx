@@ -9,6 +9,13 @@ const MODELS = [
   { id: "claude-opus-4-6", provider: "Anthropic" },
   { id: "claude-sonnet-4-6", provider: "Anthropic" },
   { id: "claude-haiku-4-5", provider: "Anthropic" },
+  { id: "glm-4.5", provider: "Z-AI" },
+  { id: "glm-4.5-air", provider: "Z-AI" },
+  { id: "glm-4.6", provider: "Z-AI" },
+  { id: "glm-4.7", provider: "Z-AI" },
+  { id: "glm-5", provider: "Z-AI" },
+  { id: "glm-5-turbo", provider: "Z-AI" },
+  { id: "glm-5.1", provider: "Z-AI" },
 ];
 
 const CHERRY_STEPS = [
@@ -164,8 +171,15 @@ export default function App() {
                       backgroundColor:
                         m.provider === "OpenAI"
                           ? "rgba(16,163,127,0.15)"
-                          : "rgba(217,119,87,0.15)",
-                      color: m.provider === "OpenAI" ? "#10a37f" : "#d97757",
+                          : m.provider === "Z-AI"
+                            ? "rgba(59,130,246,0.15)"
+                            : "rgba(217,119,87,0.15)",
+                      color:
+                        m.provider === "OpenAI"
+                          ? "#10a37f"
+                          : m.provider === "Z-AI"
+                            ? "#3b82f6"
+                            : "#d97757",
                     }}
                   >
                     {m.provider}

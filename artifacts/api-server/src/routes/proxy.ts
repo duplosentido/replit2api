@@ -19,10 +19,23 @@ const MODELS = [
   { id: "claude-opus-4-6", owned_by: "anthropic" },
   { id: "claude-sonnet-4-6", owned_by: "anthropic" },
   { id: "claude-haiku-4-5", owned_by: "anthropic" },
+  { id: "glm-4.5", owned_by: "z-ai" },
+  { id: "glm-4.5-air", owned_by: "z-ai" },
+  { id: "glm-4.6", owned_by: "z-ai" },
+  { id: "glm-4.7", owned_by: "z-ai" },
+  { id: "glm-5", owned_by: "z-ai" },
+  { id: "glm-5-turbo", owned_by: "z-ai" },
+  { id: "glm-5.1", owned_by: "z-ai" },
 ];
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY ?? "" });
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? "" });
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY ?? "",
+  ...(process.env.OPENAI_BASE_URL ? { baseURL: process.env.OPENAI_BASE_URL } : {}),
+});
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY ?? "",
+  ...(process.env.ANTHROPIC_BASE_URL ? { baseURL: process.env.ANTHROPIC_BASE_URL } : {}),
+});
 
 function authenticate(req: Request, res: FlushableResponse): boolean {
   const auth = req.headers.authorization;
@@ -33,8 +46,8 @@ function authenticate(req: Request, res: FlushableResponse): boolean {
   return true;
 }
 
-function isOpenAIModel(model: string): boolean {
-  return model.startsWith("gpt") || model.startsWith("o");
+function isOpenAICompatibleModel(model: string): boolean {
+  return model.startsWith("gpt") || model.startsWith("o") || model.startsWith("glm");
 }
 
 function isAnthropicModel(model: string): boolean {
@@ -75,7 +88,7 @@ router.post("/chat/completions", async (req: Request, res: FlushableResponse) =>
     return;
   }
 
-  if (isOpenAIModel(model)) {
+  if (isOpenAICompatibleModel(model)) {
     await handleOpenAI(req, res, model, messages, stream ?? false, rest);
   } else if (isAnthropicModel(model)) {
     await handleAnthropic(req, res, model, messages, stream ?? false, rest);
