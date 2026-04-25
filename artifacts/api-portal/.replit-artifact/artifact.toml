@@ -1,0 +1,7 @@
+[artifact]
+type = "react-vite"
+slug = "api-portal"
+title = "API Portal"
+
+[artifact.preview]
+path = "/"

@@ -1,0 +1,17 @@
+{
+  "name": "replit2api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OpenAI-compatible API proxy monorepo",
+  "scripts": {
+    "dev:api": "pnpm --filter api-server dev",
+    "dev:portal": "pnpm --filter api-portal dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@9.15.4"
+}

@@ -1,0 +1,8 @@
+[artifact]
+type = "express"
+slug = "api-server"
+title = "API Server"
+
+[artifact.server]
+port = 3000
+paths = ["/api", "/v1"]
